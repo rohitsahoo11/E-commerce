@@ -1,39 +1,38 @@
 import React, { useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { GlobalContext } from '../../context/GlobalContext';
+import { useHistory } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { dispatch } = useContext(GlobalContext);
+  const { setUser } = useContext(GlobalContext);
   const history = useHistory();
 
-  const submitHandler = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const { data } = await axios.post('/api/users/login', { email, password });
-      dispatch({ type: 'LOGIN_SUCCESS', payload: data });
-      localStorage.setItem('userInfo', JSON.stringify(data));
+      setUser(data);
       history.push('/');
     } catch (error) {
-      console.error('Error logging in', error);
+      console.error('Login failed', error);
     }
   };
 
   return (
     <div className="container mx-auto">
-      <form onSubmit={submitHandler}>
-        <h2>Login</h2>
-        <div>
+      <h2 className="text-2xl font-bold mb-4">Login</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-4">
           <label>Email</label>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required className="w-full p-2 border rounded" />
         </div>
-        <div>
+        <div className="mb-4">
           <label>Password</label>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required className="w-full p-2 border rounded" />
         </div>
-        <button type="submit">Login</button>
+        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">Login</button>
       </form>
     </div>
   );
