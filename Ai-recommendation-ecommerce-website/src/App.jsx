@@ -11,6 +11,7 @@ import PaymentScreen from './screens/PaymentScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import OrderScreen from './screens/OrderScreen';
 import OrderListScreen from './screens/OrderListScreen';
+import Chatbot from './components/Chatbot';
 
 const App = () => {
     return (
@@ -27,6 +28,7 @@ const App = () => {
                 <Route path="/product/:id" component={ProductScreen} />
                 <Route path="/cart/:id?" component={CartScreen} />
                 <Route path="/" component={HomeScreen} exact />
+                <Route path="/chatbot" component={Chatbot} />
             </main>
         </Router>
     );
